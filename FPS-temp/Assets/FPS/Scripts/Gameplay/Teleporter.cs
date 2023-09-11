@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-
-    [Tooltip("Location to which the player will be sent")]
+    [Header("Behavior")] [Tooltip("Location to which the player will be sent")]
     public Transform toTransform;
+
+    [Header("Effects")] [Tooltip("Sound played on teleport")]
+    public AudioClip teleportSound;
+    public AudioSource teleportSource;
+
+    public ParticleSystem teleportParticles;
 
     private static bool _coolingDown = false;
     private bool _playerStanding = false;
@@ -19,7 +24,7 @@ public class Teleporter : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.E) && _playerStanding && !_coolingDown)
+        if (Input.GetKey(KeyCode.F) && _playerStanding && !_coolingDown)
         {
             _coolingDown = true;
             StartCoroutine(PerformTeleport());
@@ -29,9 +34,12 @@ public class Teleporter : MonoBehaviour
     // PerformTeleport with added delay to handle GetKeyDown without multiple, unintended teleports
     private IEnumerator PerformTeleport()
     {
+        teleportSource.PlayOneShot(teleportSound);
+        teleportParticles.Play();
+
         _playerObject.transform.position = toTransform.position;
         _playerObject.transform.forward = toTransform.forward;
-        
+
         yield return new WaitForSeconds(0.5f);
         
         _coolingDown = false;
@@ -39,17 +47,14 @@ public class Teleporter : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering the Zone");
         if (other.gameObject.name != "Player")
             return;
         _playerObject = other.gameObject;
         _playerStanding = true;
-        Debug.Log("Player has entered");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exiting");
         if (other.gameObject.name != "Player")
             return;
         _playerStanding = false;
