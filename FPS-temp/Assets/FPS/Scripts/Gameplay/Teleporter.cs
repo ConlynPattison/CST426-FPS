@@ -12,6 +12,7 @@ public class Teleporter : MonoBehaviour
     public AudioClip teleportSound;
     public AudioSource teleportSource;
 
+    [Tooltip("Particle Effect played on teleport")]
     public ParticleSystem teleportParticles;
 
     private static bool _coolingDown = false;

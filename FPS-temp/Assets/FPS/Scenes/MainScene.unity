@@ -2005,6 +2005,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic circle
       objectReference: {fileID: 0}
+    - target: {fileID: 4259512923047065137, guid: d67680feb67ef3b4fab0c08ef20e047a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6329984959426657225, guid: d67680feb67ef3b4fab0c08ef20e047a,
         type: 3}
       propertyPath: m_RootOrder
